@@ -22,8 +22,7 @@ function PlayerMirror:new()
    self.gravity = 1500
    self.jumpAmount = -500
    self.health = {current = 5, max = 5}
-   self.attackRangeX = 40
-   self.attackRangeY = 30
+   
 
    self.color = {
       red = 1,
@@ -36,15 +35,13 @@ function PlayerMirror:new()
    self.graceDuration = 0.1
 
    self.alive = true
-   self.attacking = false
-   self.damageDone = false
-   self.grappleactive = false
-   self.grabbed = false
+  
+   
    self.direction = "right"
    self.state = "idle"
    self.grounded = false
 
-   self.godModeActive = false
+  
 
    self:loadAssets {}
 
@@ -297,9 +294,6 @@ function PlayerMirror:draw()
    love.graphics.draw(self.animation.draw, self.x, self.y, 0, scaleX, 1, self.animation.width / 2, self.animation.height / 2)
    love.graphics.setColor(1,1,1,1)
 
-   if self.grappleactive then
-      GrapplingHook:draw()
-   end
 end
 
 return PlayerMirror

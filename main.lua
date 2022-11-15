@@ -108,11 +108,10 @@ function love.keypressed(key)
   --for _,v in ipairs(actorList) do
   if gameStarted then
 
-    Player:attackkey(key)
+  
     Player:jump(key)
     PlayerMirror:jump(key)
-    Player:grapplinghookkey(key)
-    Player:godMode(key)
+   
   end
 end
 

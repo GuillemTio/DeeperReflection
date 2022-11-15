@@ -22,8 +22,7 @@ function Player:new()
    self.gravity = 1500
    self.jumpAmount = -500
    self.health = {current = 5, max = 5}
-   self.attackRangeX = 40
-   self.attackRangeY = 30
+   
 
    self.color = {
       red = 1,
@@ -36,15 +35,14 @@ function Player:new()
    self.graceDuration = 0.1
 
    self.alive = true
-   self.attacking = false
-   self.damageDone = false
-   self.grappleactive = false
-   self.grabbed = false
+   
+   
+   
    self.direction = "right"
    self.state = "idle"
    self.grounded = false
 
-   self.godModeActive = false
+   
 
    self:loadAssets {}
 
@@ -64,15 +62,12 @@ function Player:update(dt)
    self:decreaseGraceTime(dt)
    self:animate(dt)
    self:syncPhysics()
-   self:grapplinghook(dt)
+  
 
-   if not self.grabbed then
+  
       self:move(dt)
-      self:attack()
-      --self:applyGravity(dt)
-   else
-      self:movetograpple()
-   end
+      
+  
    self:applyGravity(dt)
 
 end
@@ -197,10 +192,7 @@ function Player:respawn()
       BossMushroom.removeAll()
       backgroundMusic:stop()
       love.load()
-      --self.physics.body:setPosition(self.startX, self.startY)
-      --self.health.current = self.health.max
-      --self.alive = true
-      --self.grappleactive = false
+      
 
    end
 end
@@ -240,12 +232,7 @@ function Player:syncPhysics()
    self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 
-function Player:movetograpple()
-   local direction = Vector.new(GrapplingHook.x - self.x, GrapplingHook.y - self.y)
-   direction:normalize()
 
-   self.xVel, self.yVel = direction.x * 350, direction.y * 350
-end
 
 function Player:beginContact(a, b, collision)
    if self.grounded == true then return end
@@ -282,75 +269,12 @@ function Player:jump(key)
    end
 end
 
-function Player:grapplinghookkey(key)
-   local g
-   if (key == "l") and not self.grappleactive then
-      GrapplingHook:new()
-      table.insert(actorList, GrapplingHook)
-      self.grappleactive = true
-
-   elseif (key == "l") and self.grappleactive then
-      if self.grabbed then
-         self.grabbed = false
-         self.grounded = false
-      end
-      print(1)
-      print(g)
-      print(GrapplingHook)
-      table.remove(actorList, g)
-      self.grappleactive = false
-   end
-   -- si le vuelvo a dar se cancela CHECK
-end
-
-function Player:attackkey(key)
-   if key == "k" and not self.grabbed and not self.attacking then
-      self.attacking = true
-   end
-end
-
-function Player:godMode(key)
-   if key == "g"then
-      if not self.godModeActive then
-         self.godModeActive = true
-      else
-         self.godModeActive = false
-      end
-   end
-end
-
-function Player:attack()
-   if self.attacking then
-      if self.animation.draw == self.animation.attack.img[3] and not self.damageDone then
-         for _,v in ipairs(actorList) do 
-            if self.direction == "right" then
-               if v.x > self.x and v.x < self.x+self.attackRangeX and v.y > self.y-self.attackRangeY and v.y < self.y+self.attackRangeY then
-                  print(v)
-                  v:takeDamage(1,v)
-                  self.damageDone = true
-               end
-            else
-               if v.x < self.x and v.x > self.x-self.attackRangeX and v.y > self.y-self.attackRangeY and v.y < self.y+self.attackRangeY then
-                  print(v)
-                  v:takeDamage(1,v)
-                  self.damageDone = true
-               end
-            end
-         end
-      end
-   end
-   if self.animation.draw == self.animation.attack.img[4] then
-      self.attacking = false
-      self.damageDone = false
-   end
-end
 
 
-function Player:grapplinghook(dt)
-   if self.grappleactive then
-      GrapplingHook:update(dt)
-   end
-end
+
+
+
+
 
 function Player:endContact(a, b, collision)
    if a == self.physics.fixture or b == self.physics.fixture then
@@ -361,18 +285,7 @@ function Player:endContact(a, b, collision)
 end
 
 function Player:draw()
-   --local xx = self.position.x
-   --local ox = self.origin.x
-   --local yy = self.position.y
-   --local oy = self.origin.y
-   --local sx = self.scale.x/15
-   --local sy = self.scale.y/15
-   --local rr = self.rot
-
-   --love.graphics.draw(self.image,xx,yy,rr,sx,sy,ox,oy,0,0)
-
-   --love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
-
+   
    local scaleX = 1
    if self.direction == "left" then
       scaleX = -1
@@ -382,9 +295,7 @@ function Player:draw()
    love.graphics.draw(self.animation.draw, self.x, self.y, 0, scaleX, 1, self.animation.width / 2, self.animation.height / 2)
    love.graphics.setColor(1,1,1,1)
 
-   if self.grappleactive then
-      GrapplingHook:draw()
-   end
+
 end
 
 return Player
