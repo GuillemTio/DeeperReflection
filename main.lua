@@ -32,7 +32,7 @@ function love.load()
   --Map.layers.solid.visible = false -- colliders non visible
  -- Map.layers.entity.visible = false
   
-  --MapWidth = Map.layers.ground.width * 24
+  MapHeight = 230*16 --Map.layers.grounded.height * 16
   --background = love.graphics.newImage("src/textures/background/background_layer_1.png") -- this is for our future background
   --background2 = love.graphics.newImage("src/textures/background/background_layer_2.png")
   --background3 = love.graphics.newImage("src/textures/background/background_layer_3.png")

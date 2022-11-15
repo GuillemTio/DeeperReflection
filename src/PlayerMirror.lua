@@ -8,8 +8,8 @@ PlayerMirror = {}
 function PlayerMirror:new()
    --Player.super.new(self,"src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png",400,500,20,1,0)
    self.image = "src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png"
-   self.x = love.graphics.getWidth()/2 -50
-   self.y = 100
+   self.x = love.graphics.getWidth()/2 -270
+   self.y = 50
    self.startX = self.x
    self.startY = self.y
    self.width = 50
