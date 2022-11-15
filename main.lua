@@ -1,8 +1,8 @@
 Player = Player or require "src/Player"
 Camera = Camera or require"src/Camera"
-EnemyGoblin = EnemyGoblin or require"src/EnemyGoblin"
-EnemySkeleton = EnemySkeleton or require"src/EnemySkeleton"
-HUD = HUD or require"src/HUD"
+--EnemyGoblin = EnemyGoblin or require"src/EnemyGoblin"
+--EnemySkeleton = EnemySkeleton or require"src/EnemySkeleton"
+--HUD = HUD or require"src/HUD"
 StartMenu = StartMenu or require"src/StartMenu"
 PlayerMirror = PlayerMirror or require"src/PlayerMirror"
 
@@ -29,21 +29,21 @@ function love.load()
   World = love.physics.newWorld(0, 0) -- takes x and y velocity for the World, for example to create gravity
   World:setCallbacks(beginContact, endContact)
   Map:box2d_init(World)
-  Map.layers.solid.visible = false -- colliders non visible
-  Map.layers.entity.visible = false
+  --Map.layers.solid.visible = false -- colliders non visible
+ -- Map.layers.entity.visible = false
   
-  MapWidth = Map.layers.ground.width * 24
+  --MapWidth = Map.layers.ground.width * 24
   --background = love.graphics.newImage("src/textures/background/background_layer_1.png") -- this is for our future background
   --background2 = love.graphics.newImage("src/textures/background/background_layer_2.png")
   --background3 = love.graphics.newImage("src/textures/background/background_layer_3.png")
 
-  EnemyGoblin.loadAssets()
-  EnemySkeleton.loadAssets()
+  --EnemyGoblin.loadAssets()
+  --EnemySkeleton.loadAssets()
   PlayerMirror:new()  
   Player:new()
-  HUD:load()
+  --HUD:load()
 
-  spawnEntities()
+  --spawnEntities()
   --local p = Player()
   --table.insert(actorList,p)
   end
@@ -61,10 +61,10 @@ function love.update(dt)
   World:update(dt)
   Player:update(dt)
   PlayerMirror:update(dt)  
-  EnemyGoblin.updateAll(dt)
-  EnemySkeleton.updateAll(dt)
+  --EnemyGoblin.updateAll(dt)
+  --EnemySkeleton.updateAll(dt)
   Camera:setPosition(Player.x, 0)
-  HUD:update(dt)
+  --HUD:update(dt)
   end
 end
 
@@ -87,11 +87,11 @@ function love.draw()
 
   Player:draw()
   PlayerMirror:draw()  
-  EnemyGoblin.drawAll()
-  EnemySkeleton.drawAll()
+  --EnemyGoblin.drawAll()
+  --EnemySkeleton.drawAll()
 
   Camera:clear()
-  HUD:draw()
+  --HUD:draw()
   end
 end
 
@@ -108,8 +108,8 @@ end
 
 function beginContact(a, b, collision)
   if gameStarted then
-  EnemyGoblin.beginContact(a, b, collision)
-  EnemySkeleton.beginContact(a, b, collision)
+  --EnemyGoblin.beginContact(a, b, collision)
+  --EnemySkeleton.beginContact(a, b, collision)
   if a == Player.physics.fixture or b == Player.physics.fixture then
     Player:beginContact(a, b, collision)  
   end
@@ -127,15 +127,15 @@ function endContact(a, b, collision)
   
 end
 
-function spawnEntities()
-  if gameStarted then
-  for i,v in ipairs(Map.layers.entity.objects) do
-    if v.type == "enemyGoblin" then
-      EnemyGoblin:new(v.x + v.width / 2, v.y + v.height / 2)
-    end
-    if v.type == "enemySkeleton" then
-      EnemySkeleton:new(v.x + v.width / 2, v.y + v.height / 2)
-    end
-  end
-end
-end
+--function spawnEntities()
+--  if gameStarted then
+--  for i,v in ipairs(Map.layers.entity.objects) do
+--    if v.type == "enemyGoblin" then
+--      EnemyGoblin:new(v.x + v.width / 2, v.y + v.height / 2)
+--    end
+--    if v.type == "enemySkeleton" then
+--      EnemySkeleton:new(v.x + v.width / 2, v.y + v.height / 2)
+--    end
+--  end
+--end
+--end

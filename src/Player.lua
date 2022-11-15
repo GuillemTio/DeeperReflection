@@ -7,7 +7,7 @@ Player = {}
 
 function Player:new()
    --Player.super.new(self,"src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png",400,500,20,1,0)
-   self.image = "src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png"
+   self.image = "src/textures/player/Player1/walking1.png"
    self.x = 50
    self.y = 100
    self.startX = self.x
@@ -122,28 +122,17 @@ function Player:loadAssets()
    self.animation = { timer = 0, rate = 0.1 }
    self.animation.run = { total = 6, current = 1, img = {} }
    for i = 1, self.animation.run.total do
-      self.animation.run.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Run/" .. i .. ".png")
+      self.animation.run.img[i] = love.graphics.newImage("src/textures/player/Player1/walking" .. i .. ".png")
    end
 
-   self.animation.idle = { total = 4, current = 1, img = {} }
+   self.animation.idle = { total = 5, current = 1, img = {} }
    for i = 1, self.animation.idle.total do
-      self.animation.idle.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Idle/" .. i ..".png")
+      self.animation.idle.img[i] = love.graphics.newImage("src/textures/player/Player1/idle" .. i ..".png")
    end
 
-   self.animation.air = { total = 2, current = 1, img = {} }
+   self.animation.air = { total = 1, current = 1, img = {} }
    for i = 1, self.animation.air.total do
-      self.animation.air.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Jump/" .. i ..".png")
-   end
-
-   
-   self.animation.grapple = { total = 2, current = 1, img = {} }
-   for i = 1, self.animation.grapple.total do
-      self.animation.grapple.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Grapple/" .. i ..".png")
-   end
-
-   self.animation.attack = { total = 4, current = 1, img = {} }
-   for i = 1, self.animation.attack.total do
-      self.animation.attack.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Attack/" .. i ..".png")
+      self.animation.air.img[i] = love.graphics.newImage("src/textures/player/Player1/jump" .. i ..".png")
    end
 
    self.animation.draw = self.animation.idle.img[1]
@@ -186,11 +175,11 @@ end
 
 function Player:respawn()
    if not self.alive or self.y > 730 then
-      EnemyGoblin.removeAll()
-      EnemyEyes.removeAll()
-      EnemySkeleton.removeAll()
-      BossMushroom.removeAll()
-      backgroundMusic:stop()
+      --EnemyGoblin.removeAll()
+      --EnemyEyes.removeAll()
+      --EnemySkeleton.removeAll()
+      --BossMushroom.removeAll()
+      --backgroundMusic:stop()
       love.load()
       
 

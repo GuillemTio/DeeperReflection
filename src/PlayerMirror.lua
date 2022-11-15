@@ -8,7 +8,7 @@ PlayerMirror = {}
 function PlayerMirror:new()
    --Player.super.new(self,"src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png",400,500,20,1,0)
    self.image = "src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png"
-   self.x = 300
+   self.x = love.graphics.getWidth()/2 -50
    self.y = 100
    self.startX = self.x
    self.startY = self.y
@@ -61,13 +61,7 @@ function PlayerMirror:update(dt)
    self:decreaseGraceTime(dt)
    self:animate(dt)
    self:syncPhysics()
-   
-
-
-      self:move(dt) 
-      
-  
-  
+    self:move(dt) 
    self:applyGravity(dt)
 
 end
@@ -120,31 +114,21 @@ end
 
 function PlayerMirror:loadAssets()
    self.animation = { timer = 0, rate = 0.1 }
-   self.animation.run = { total = 6, current = 1, img = {} }
+   self.animation.run = { total = 3, current = 1, img = {} }
    for i = 1, self.animation.run.total do
-      self.animation.run.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Run/" .. i .. ".png")
+      self.animation.run.img[i] = love.graphics.newImage("src/textures/player/MirroredPlayer/running" .. i .. ".png")
    end
 
-   self.animation.idle = { total = 4, current = 1, img = {} }
+   self.animation.idle = { total = 2, current = 1, img = {} }
    for i = 1, self.animation.idle.total do
-      self.animation.idle.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Idle/" .. i ..".png")
+      self.animation.idle.img[i] = love.graphics.newImage("src/textures/player/MirroredPlayer/idle" .. i .. ".png")
    end
 
-   self.animation.air = { total = 2, current = 1, img = {} }
+   self.animation.air = { total = 1, current = 1, img = {} }
    for i = 1, self.animation.air.total do
-      self.animation.air.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Jump/" .. i ..".png")
+      self.animation.air.img[i] = love.graphics.newImage("src/textures/player/MirroredPlayer/jump" .. i .. ".png")
    end
 
-   
-   self.animation.grapple = { total = 2, current = 1, img = {} }
-   for i = 1, self.animation.grapple.total do
-      self.animation.grapple.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Grapple/" .. i ..".png")
-   end
-
-   self.animation.attack = { total = 4, current = 1, img = {} }
-   for i = 1, self.animation.attack.total do
-      self.animation.attack.img[i] = love.graphics.newImage("src/textures/PackNinja/IndividualSprites/Attack/" .. i ..".png")
-   end
 
    self.animation.draw = self.animation.idle.img[1]
    self.animation.width = self.animation.draw:getWidth()
@@ -186,11 +170,6 @@ end
 
 function PlayerMirror:respawn()
    if not self.alive or self.y > 730 then
-      EnemyGoblin.removeAll()
-      EnemyEyes.removeAll()
-      EnemySkeleton.removeAll()
-      BossMushroom.removeAll()
-      backgroundMusic:stop()
       love.load()
      
 
