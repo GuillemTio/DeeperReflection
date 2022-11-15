@@ -4,14 +4,14 @@ local StartMenu = Actor:extend()
 local w, h = love.graphics.getDimensions()
 
 function StartMenu:new()
-    self.backgroundMusic = love.audio.newSource("src/music/SanAndreas.wav","static")
-    self.backgroundMusic:setVolume(0.2)
-    self.backgroundMusic:setLooping(true)
-    self.backgroundMusic:play()
+    --self.backgroundMusic = love.audio.newSource("src/music/SanAndreas.wav","static")
+    --self.backgroundMusic:setVolume(0.2)
+    --self.backgroundMusic:setLooping(true)
+    --self.backgroundMusic:play()
 
-    self.background = love.graphics.newImage("src/textures/background/background_layer_1.png")
-    self.background2 = love.graphics.newImage("src/textures/background/background_layer_2.png")
-    self.background3 = love.graphics.newImage("src/textures/background/background_layer_3.png")
+    --self.background = love.graphics.newImage("src/textures/background/background_layer_1.png")
+    --self.background2 = love.graphics.newImage("src/textures/background/background_layer_2.png")
+    --self.background3 = love.graphics.newImage("src/textures/background/background_layer_3.png")
 
     self.font = love.graphics.newFont("src/font/old.otf", 40)
     love.graphics.setFont(self.font)
@@ -41,7 +41,7 @@ function StartMenu:update(dt)
         if ((self.mousePositionX > self.startButtonPosX and self.mousePositionX < self.rectangleWidth + self.startButtonPosX) and (self.mousePositionY > self.startButtonPosY and self.mousePositionY < self.rectangleHeight + self.startButtonPosY)) then
             print("startinggame")
             gameStarted = true
-            self.backgroundMusic:stop()
+            --self.backgroundMusic:stop()
             love.load()
             --MAP_LEVEL
         end
@@ -52,9 +52,9 @@ function StartMenu:update(dt)
 end
 
 function StartMenu:draw()
-    love.graphics.draw(self.background, 0, 0, 0, 5, 5) -- this is for our future background, it should be always before the map
-    love.graphics.draw(self.background2, 0, 0, 0, 5, 5)
-    love.graphics.draw(self.background3, 0, 0, 0, 5, 5)
+    --love.graphics.draw(self.background, 0, 0, 0, 5, 5) -- this is for our future background, it should be always before the map
+    --love.graphics.draw(self.background2, 0, 0, 0, 5, 5)
+    --love.graphics.draw(self.background3, 0, 0, 0, 5, 5)
 
     
 
