@@ -7,6 +7,7 @@ EnemySkeleton = EnemySkeleton or require"src/EnemySkeleton"
 BossMushroom = BossMushroom or require "src/BossMushroom"
 HUD = HUD or require"src/HUD"
 StartMenu = StartMenu or require"src/StartMenu"
+PlayerMirror = PlayerMirror or require"src/PlayerMirror"
 
 gameWon = false
 gameStarted = false
@@ -43,7 +44,7 @@ function love.load()
   EnemyEyes.loadAssets()
   EnemySkeleton.loadAssets()
   BossMushroom.loadAssets()
-
+  PlayerMirror:new()  
   Player:new()
   HUD:load()
 
@@ -64,6 +65,7 @@ function love.update(dt)
 
   World:update(dt)
   Player:update(dt)
+  PlayerMirror:update(dt)  
   EnemyGoblin.updateAll(dt)
   EnemyEyes.updateAll(dt)
   EnemySkeleton.updateAll(dt)
@@ -91,6 +93,7 @@ function love.draw()
   Camera:apply()
 
   Player:draw()
+  PlayerMirror:draw()  
   EnemyGoblin.drawAll()
   EnemyEyes.drawAll()
   EnemySkeleton.drawAll()
@@ -107,6 +110,7 @@ function love.keypressed(key)
 
     Player:attackkey(key)
     Player:jump(key)
+    PlayerMirror:jump(key)
     Player:grapplinghookkey(key)
     Player:godMode(key)
   end
@@ -119,11 +123,10 @@ function beginContact(a, b, collision)
   EnemySkeleton.beginContact(a, b, collision)
   BossMushroom.beginContact(a, b, collision)
   if a == Player.physics.fixture or b == Player.physics.fixture then
-    Player:beginContact(a, b, collision)
-  elseif Player.grappleactive then
-    if a == GrapplingHook.physics.fixture or b == GrapplingHook.physics.fixture then
-      GrapplingHook:beginContact(a, b, collision)
-    end
+    Player:beginContact(a, b, collision)  
+  end
+  if a == PlayerMirror.physics.fixture or b == PlayerMirror.physics.fixture then
+    PlayerMirror:beginContact(a, b, collision)  
   end
 end
 end
@@ -131,7 +134,9 @@ end
 function endContact(a, b, collision)
   if gameStarted then
   Player:endContact(a, b, collision)
+  PlayerMirror:endContact(a,b,collision)
   end
+  
 end
 
 function spawnEntities()
