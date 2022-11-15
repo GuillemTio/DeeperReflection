@@ -65,7 +65,7 @@ function Player:update(dt)
   
 
   
-      self:move(dt)
+   self:move(dt)
       
   
    self:applyGravity(dt)

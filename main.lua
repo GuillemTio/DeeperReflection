@@ -63,7 +63,7 @@ function love.update(dt)
   PlayerMirror:update(dt)  
   --EnemyGoblin.updateAll(dt)
   --EnemySkeleton.updateAll(dt)
-  Camera:setPosition(Player.x, 0)
+  Camera:setPosition(0, Player.y-100)
   --HUD:update(dt)
   end
 end
