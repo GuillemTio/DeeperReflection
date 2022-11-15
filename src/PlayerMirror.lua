@@ -1,14 +1,14 @@
 Actor = Actor or require "src/actor"
-local Player = Actor:extend()
+local PlayerMirror = Actor:extend()
 local Vector = Vector or require "src/vector"
 --local GrapplingHook = GrapplingHook or require "src/GrapplingHook"
 
-Player = {} 
+PlayerMirror = {} 
 
-function Player:new()
+function PlayerMirror:new()
    --Player.super.new(self,"src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png",400,500,20,1,0)
-   self.image = "src/textures/player/Player1/walking1.png"
-   self.x = 50
+   self.image = "src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png"
+   self.x = love.graphics.getWidth()/2 -50
    self.y = 100
    self.startX = self.x
    self.startY = self.y
@@ -35,14 +35,13 @@ function Player:new()
    self.graceDuration = 0.1
 
    self.alive = true
-   
-   
+  
    
    self.direction = "right"
    self.state = "idle"
    self.grounded = false
 
-   
+  
 
    self:loadAssets {}
 
@@ -53,7 +52,7 @@ function Player:new()
    self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 
-function Player:update(dt)
+function PlayerMirror:update(dt)
    --Player.super.update(self,dt)
    self:unTint(dt)
    self:respawn()
@@ -62,17 +61,12 @@ function Player:update(dt)
    self:decreaseGraceTime(dt)
    self:animate(dt)
    self:syncPhysics()
-  
-
-  
-      self:move(dt)
-      
-  
+    self:move(dt) 
    self:applyGravity(dt)
 
 end
 
-function Player:setState()
+function PlayerMirror:setState()
    if self.attacking then
    self.state = "attack"
    elseif not self.grounded and not self.grabbed then
@@ -86,7 +80,7 @@ function Player:setState()
    end
 end
 
-function Player:setDirection()
+function PlayerMirror:setDirection()
    if self.xVel <0 then
       self.direction = "left"
    elseif self.xVel>0 then
@@ -94,7 +88,7 @@ function Player:setDirection()
    end
 end
 
-function Player:animate(dt)
+function PlayerMirror:animate(dt)
    self.animation.timer = self.animation.timer + dt
    if self.animation.timer > self.animation.rate then
       self.animation.timer = 0
@@ -102,13 +96,13 @@ function Player:animate(dt)
    end
 end
 
-function Player:decreaseGraceTime(dt)
+function PlayerMirror:decreaseGraceTime(dt)
    if not self.grounded then
       self.graceTime = self.graceTime - dt
    end
 end
 
-function Player:setNewFrame()
+function PlayerMirror:setNewFrame()
    local anim = self.animation[self.state]
    if anim.current < anim.total then
       anim.current = anim.current + 1
@@ -118,22 +112,23 @@ function Player:setNewFrame()
    self.animation.draw = anim.img[anim.current]
 end
 
-function Player:loadAssets()
+function PlayerMirror:loadAssets()
    self.animation = { timer = 0, rate = 0.1 }
-   self.animation.run = { total = 6, current = 1, img = {} }
+   self.animation.run = { total = 3, current = 1, img = {} }
    for i = 1, self.animation.run.total do
-      self.animation.run.img[i] = love.graphics.newImage("src/textures/player/Player1/walking" .. i .. ".png")
+      self.animation.run.img[i] = love.graphics.newImage("src/textures/player/MirroredPlayer/running" .. i .. ".png")
    end
 
-   self.animation.idle = { total = 5, current = 1, img = {} }
+   self.animation.idle = { total = 2, current = 1, img = {} }
    for i = 1, self.animation.idle.total do
-      self.animation.idle.img[i] = love.graphics.newImage("src/textures/player/Player1/idle" .. i ..".png")
+      self.animation.idle.img[i] = love.graphics.newImage("src/textures/player/MirroredPlayer/idle" .. i .. ".png")
    end
 
    self.animation.air = { total = 1, current = 1, img = {} }
    for i = 1, self.animation.air.total do
-      self.animation.air.img[i] = love.graphics.newImage("src/textures/player/Player1/jump" .. i ..".png")
+      self.animation.air.img[i] = love.graphics.newImage("src/textures/player/MirroredPlayer/jump" .. i .. ".png")
    end
+
 
    self.animation.draw = self.animation.idle.img[1]
    self.animation.width = self.animation.draw:getWidth()
@@ -142,7 +137,7 @@ function Player:loadAssets()
 
 end
 
-function Player:takeDamage(amount)
+function PlayerMirror:takeDamage(amount)
    self:tintRed()
    if not self.godModeActive then
    if self.health.current - amount > 0 then
@@ -173,42 +168,37 @@ function Player:tintRed()
    self.color.blue = 0
 end
 
-function Player:respawn()
+function PlayerMirror:respawn()
    if not self.alive or self.y > 730 then
-      --EnemyGoblin.removeAll()
-      --EnemyEyes.removeAll()
-      --EnemySkeleton.removeAll()
-      --BossMushroom.removeAll()
-      --backgroundMusic:stop()
       love.load()
-      
+     
 
    end
 end
 
-function Player:unTint(dt)
+function PlayerMirror:unTint(dt)
    self.color.red = math.min(self.color.red + self.color.speed * dt, 1)
    self.color.green = math.min(self.color.green + self.color.speed * dt, 1)
    self.color.blue = math.min(self.color.blue + self.color.speed * dt, 1)
 end
 
-function Player:applyGravity(dt)
+function PlayerMirror:applyGravity(dt)
    if not self.grounded then
       self.yVel = self.yVel + self.gravity * dt
    end
 end
 
-function Player:move(dt)
-   if love.keyboard.isDown("d", "right") then
+function PlayerMirror:move(dt)
+   if love.keyboard.isDown("a", "left") then
       self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
-   elseif love.keyboard.isDown("a", "left") then
+   elseif love.keyboard.isDown("d", "right") then
       self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
    else
       self:applyFriction(dt)
    end
 end
 
-function Player:applyFriction(dt)
+function PlayerMirror:applyFriction(dt)
    if self.xVel > 0 then
       self.xVel = math.max(self.xVel - self.friction * dt, 0)
    elseif self.xVel < 0 then
@@ -216,14 +206,13 @@ function Player:applyFriction(dt)
    end
 end
 
-function Player:syncPhysics()
+function PlayerMirror:syncPhysics()
    self.x, self.y = self.physics.body:getPosition()
    self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 
 
-
-function Player:beginContact(a, b, collision)
+function PlayerMirror:beginContact(a, b, collision)
    if self.grounded == true then return end
    local nx, ny = collision:getNormal()
    if a == self.physics.fixture then
@@ -241,14 +230,14 @@ function Player:beginContact(a, b, collision)
    end
 end
 
-function Player:land(collision)
+function PlayerMirror:land(collision)
    self.currentGroundCollision = collision
    self.yVel = 0
    self.grounded = true
    self.graceTime = self.graceDuration
 end
 
-function Player:jump(key)
+function PlayerMirror:jump(key)
    if (key == "space") then
       if self.graceTime>0 or self.grounded then
          self.yVel = self.jumpAmount
@@ -264,8 +253,7 @@ end
 
 
 
-
-function Player:endContact(a, b, collision)
+function PlayerMirror:endContact(a, b, collision)
    if a == self.physics.fixture or b == self.physics.fixture then
       if self.currentGroundCollision == collision then
          self.grounded = false
@@ -273,8 +261,9 @@ function Player:endContact(a, b, collision)
    end
 end
 
-function Player:draw()
-   
+function PlayerMirror:draw()
+
+
    local scaleX = 1
    if self.direction == "left" then
       scaleX = -1
@@ -284,7 +273,6 @@ function Player:draw()
    love.graphics.draw(self.animation.draw, self.x, self.y, 0, scaleX, 1, self.animation.width / 2, self.animation.height / 2)
    love.graphics.setColor(1,1,1,1)
 
-
 end
 
-return Player
+return PlayerMirror
