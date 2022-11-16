@@ -154,6 +154,7 @@ end
 
 function Player:respawn()
    if not self.alive then
+      backgroundMusic:stop()
       love.load()
    end
 end

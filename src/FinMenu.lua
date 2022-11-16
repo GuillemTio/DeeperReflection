@@ -4,10 +4,12 @@ local FinMenu = Actor:extend()
 local w, h = love.graphics.getDimensions()
 
 function FinMenu:new()
-  --self.backgroundMusic = love.audio.newSource("src/music/SanAndreas.wav","static")
-    --self.backgroundMusic:setVolume(0.2)
-    --self.backgroundMusic:setLooping(true)
-    --self.backgroundMusic:play()
+    self.backgroundMusic = love.audio.newSource("src/music/MissYouWIN.wav","static")
+    self.backgroundMusic:setVolume(0.3)
+    self.backgroundMusic:setLooping(true)
+    self.backgroundMusic:play()
+
+    backgroundMusic:stop()
 
     self.background = love.graphics.newImage("src/textures/background/background1.png")
     self.background2 = love.graphics.newImage("src/textures/background/background2.png")
@@ -59,7 +61,7 @@ function FinMenu:update(dt)
         if ((self.mousePositionX > self.startButtonPosX and self.mousePositionX < self.rectangleWidth + self.startButtonPosX) and (self.mousePositionY > self.startButtonPosY and self.mousePositionY < self.rectangleHeight + self.startButtonPosY)) then
             print("startinggame")
             gameWon = false
-            --self.backgroundMusic:stop()
+            self.backgroundMusic:stop()
             love.load()
             --MAP_LEVEL
         end

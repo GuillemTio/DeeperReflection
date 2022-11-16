@@ -149,6 +149,7 @@ end
 
 function PlayerMirror:respawn()
    if not self.alive or self.y < Camera.y or self.y > Camera.y + love.graphics.getHeight() / 2 then
+      backgroundMusic:stop()
       love.load()
    end
 end

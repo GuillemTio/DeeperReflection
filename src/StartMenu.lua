@@ -4,10 +4,10 @@ local StartMenu = Actor:extend()
 local w, h = love.graphics.getDimensions()
 
 function StartMenu:new()
-    --self.backgroundMusic = love.audio.newSource("src/music/SanAndreas.wav","static")
-    --self.backgroundMusic:setVolume(0.2)
-    --self.backgroundMusic:setLooping(true)
-    --self.backgroundMusic:play()
+    self.backgroundMusic = love.audio.newSource("src/music/PhonkMenu.wav","static")
+    self.backgroundMusic:setVolume(0.1)
+    self.backgroundMusic:setLooping(true)
+    self.backgroundMusic:play()
 
     self.background = love.graphics.newImage("src/textures/background/background1.png")
     self.background2 = love.graphics.newImage("src/textures/background/background2.png")
@@ -58,7 +58,7 @@ function StartMenu:update(dt)
         if ((self.mousePositionX > self.startButtonPosX and self.mousePositionX < self.rectangleWidth + self.startButtonPosX) and (self.mousePositionY > self.startButtonPosY and self.mousePositionY < self.rectangleHeight + self.startButtonPosY)) then
             print("startinggame")
             gameStarted = true
-            --self.backgroundMusic:stop()
+            self.backgroundMusic:stop()
             love.load()
             --MAP_LEVEL
         end
@@ -76,7 +76,6 @@ function StartMenu:update(dt)
         end
     end
 
-    --if love.mouse.is
 end
 
 function StartMenu:draw()

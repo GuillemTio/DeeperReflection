@@ -23,10 +23,10 @@ function love.load()
     
       FinMenu:new()
   else  
-  --backgroundMusic = love.audio.newSource("src/music/BigPoppa.wav","static")
-  --backgroundMusic:setVolume(0.2)
-  --backgroundMusic:setLooping(true)
-  --backgroundMusic:play()
+  backgroundMusic = love.audio.newSource("src/music/PhonkGameplay.wav","static")
+  backgroundMusic:setVolume(0.1)
+  backgroundMusic:setLooping(true)
+  backgroundMusic:play()
 
   Map = STI("src/map/Map1.lua", { "box2d" })
   World = love.physics.newWorld(0, 0) -- takes x and y velocity for the World, for example to create gravity
@@ -121,8 +121,9 @@ function love.keypressed(key)
    
     if key == "escape" then
       gameStarted = false
-      love.load()
       Spikes:removeAll()
+      backgroundMusic:stop()
+      love.load()
     end
   end
 end
