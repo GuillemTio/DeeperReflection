@@ -46,7 +46,6 @@ end
 
 function StartMenu:update(dt)
     self.mousePositionX, self.mousePositionY = love.mouse.getPosition()
-    print(self.spikesTimer)
     local canPressSpikes
     if self.spikesTimer > self.timeToPressAgain then
         canPressSpikes = true
