@@ -29,7 +29,7 @@ function love.load()
   World = love.physics.newWorld(0, 0) -- takes x and y velocity for the World, for example to create gravity
   World:setCallbacks(beginContact, endContact)
   Map:box2d_init(World)
-  --Map.layers.solid.visible = false -- colliders non visible
+  Map.layers.solid.visible = false -- colliders non visible
  -- Map.layers.entity.visible = false
   
   --MapWidth = Map.layers.ground.width * 24
