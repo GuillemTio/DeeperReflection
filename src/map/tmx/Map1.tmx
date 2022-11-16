@@ -24,7 +24,7 @@
  <objectgroup color="#00ff00" id="9" name="obstacles">
   <object id="93" name="Spike" type="spike" x="109.455" y="237.455" width="10" height="26.67"/>
   <object id="98" name="Spike" type="spike" x="545" y="892.332" width="10" height="26.67"/>
-  <object id="99" name="Spike" type="spike" x="124.667" y="1214.33" width="10" height="26.67"/>
+  <object id="99" name="Spike" type="spike" x="91.1667" y="1212.83" width="10" height="26.67"/>
   <object id="101" name="Spike" type="spike" x="357.667" y="1770.66" width="10" height="26.67"/>
   <object id="103" name="Spike" type="spike" x="533" y="1933" width="10" height="26.67"/>
   <object id="106" name="Spike" type="spike" x="282.333" y="2333.5" width="10" height="26.67"/>
