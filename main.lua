@@ -22,8 +22,10 @@ function love.load()
 
   if not gameStarted then
     StartMenu:new()
-  else
-
+  elseif gameWon then
+    
+      FinMenu:new()
+  else  
   --backgroundMusic = love.audio.newSource("src/music/BigPoppa.wav","static")
   --backgroundMusic:setVolume(0.2)
   --backgroundMusic:setLooping(true)
@@ -65,8 +67,11 @@ function love.update(dt)
 
   if not gameStarted then
     StartMenu:update(dt)
+  elseif gameWon then
+    FinMenu:update(dt)
   else
-
+      
+    
   World:update(dt)
   Player:update(dt)
   PlayerMirror:update(dt)  
@@ -77,9 +82,7 @@ function love.update(dt)
   Camera:setPosition(0, Player.y-100)
   --HUD:update(dt)
   end
-  if gameWon then
-    FinMenu:new()
-  end
+  
 end
 
 function love.draw()
@@ -88,7 +91,10 @@ function love.draw()
   --end
   if not gameStarted then
     StartMenu:draw()
+  elseif gameWon then
+    FinMenu:draw()
   else
+  
 
   love.graphics.draw(background, 0, 0, 0, 3.2, 3.2) -- this is for our future background, it should be always before the map
   love.graphics.draw(background2, 0, 0, 0, 3.2, 3.2)
