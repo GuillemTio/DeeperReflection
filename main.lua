@@ -1,5 +1,6 @@
 Player = Player or require "src/Player"
 Camera = Camera or require"src/Camera"
+FinMenu = FinMenu or require"src/FinMenu"
 --EnemyGoblin = EnemyGoblin or require"src/EnemyGoblin"
 --EnemySkeleton = EnemySkeleton or require"src/EnemySkeleton"
 --HUD = HUD or require"src/HUD"
@@ -75,6 +76,9 @@ function love.update(dt)
   --EnemySkeleton.updateAll(dt)
   Camera:setPosition(0, Player.y-100)
   --HUD:update(dt)
+  end
+  if gameWon then
+    FinMenu:new()
   end
 end
 
@@ -154,7 +158,7 @@ function spawnEntities()
       end
     end
     if v.type == "chest" then
-      Chest:new(v.x + v.width / 2, v.y + v.height / 2)
+      Chest.new(v.x + v.width / 2, v.y + v.height / 2)
     end
   end
   end
