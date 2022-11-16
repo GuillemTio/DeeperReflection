@@ -1,6 +1,8 @@
 local Chest = {img = love.graphics.newImage("src/textures/chest/chest01.png")}
 Chest.__index = Chest
 
+FinMenu = FinMenu or require"src/FinMenu"
+
 Chest.width = Chest.img:getWidth()
 Chest.height = Chest.img:getHeight()
 
@@ -44,10 +46,11 @@ function Chest.beginContact(a, b, collision)
    for i,instance in ipairs(ActiveChest) do
       if a == instance.physics.fixture or b == instance.physics.fixture then
          if a == Player.physics.fixture or b == Player.physics.fixture then
-            if a == PlayerMirror.physics.fixture or b == PlayerMirror.physics.fixture then
-                
+            
+                gameWon = true
+                --print("asdfa")
                 return true
-             end
+             
          end
       end
    end
