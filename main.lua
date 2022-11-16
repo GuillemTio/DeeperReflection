@@ -3,11 +3,14 @@ Camera = Camera or require"src/Camera"
 --EnemyGoblin = EnemyGoblin or require"src/EnemyGoblin"
 --EnemySkeleton = EnemySkeleton or require"src/EnemySkeleton"
 --HUD = HUD or require"src/HUD"
+Spikes = Spikes or require"src/Spikes"
+Chest = Chest or require"src/Chest"
 StartMenu = StartMenu or require"src/StartMenu"
 PlayerMirror = PlayerMirror or require"src/PlayerMirror"
 
 gameWon = false
 gameStarted = false
+haveSpikes = false
 
 actorList = {} --Lista de elementos de juego
 
@@ -30,22 +33,25 @@ function love.load()
   World:setCallbacks(beginContact, endContact)
   Map:box2d_init(World)
   Map.layers.solid.visible = false -- colliders non visible
- -- Map.layers.entity.visible = false
+  Map.layers.obstacles.visible = false
   
   MapHeight = Map.layers.grounded.height * 16
-  --background = love.graphics.newImage("src/textures/background/background_layer_1.png") -- this is for our future background
-  --background2 = love.graphics.newImage("src/textures/background/background_layer_2.png")
-  --background3 = love.graphics.newImage("src/textures/background/background_layer_3.png")
-
+  background = love.graphics.newImage("src/textures/background/background1.png") -- this is for our future background
+  background2 = love.graphics.newImage("src/textures/background/background2.png")
+  background3 = love.graphics.newImage("src/textures/background/background3.png")
+  background4 = love.graphics.newImage("src/textures/background/background4a.png")
+  
   --EnemyGoblin.loadAssets()
   --EnemySkeleton.loadAssets()
   PlayerMirror:new()  
   Player:new()
   --HUD:load()
+  
+  spawnEntities()
+  
   local font = love.graphics.newFont("src/font/old.otf", 40)
   love.graphics.setFont(font)
 
-  --spawnEntities()
   --local p = Player()
   --table.insert(actorList,p)
   end
@@ -63,6 +69,8 @@ function love.update(dt)
   World:update(dt)
   Player:update(dt)
   PlayerMirror:update(dt)  
+  Spikes.updateAll(dt)
+  Chest.updateAll(dt)
   --EnemyGoblin.updateAll(dt)
   --EnemySkeleton.updateAll(dt)
   Camera:setPosition(0, Player.y-100)
@@ -78,21 +86,25 @@ function love.draw()
     StartMenu:draw()
   else
 
-  --love.graphics.draw(background, 0, 0, 0, 5, 5) -- this is for our future background, it should be always before the map
-  --love.graphics.draw(background2, 0, 0, 0, 5, 5)
-  --love.graphics.draw(background3, 0, 0, 0, 5, 5)
-
+  love.graphics.draw(background, 0, 0, 0, 3.2, 3.2) -- this is for our future background, it should be always before the map
+  love.graphics.draw(background2, 0, 0, 0, 3.2, 3.2)
+  love.graphics.draw(background3, 0, 0, 0, 3.2, 3.2)
+  love.graphics.draw(background4, 0, 0, 0, 3.2, 3.2)
+    
+  
   Map:draw(-Camera.x, -Camera.y, Camera.scale, Camera.scale)
   
-
-
+  
+  
   Camera:apply()
-
+  
   love.graphics.print("you're lost!",230, 70, 0, 0.27 , 0.27)
   love.graphics.print("don't lose your partner!",420, 250, 0, 0.27 , 0.27)
-
+  
   Player:draw()
   PlayerMirror:draw()  
+  Spikes.drawAll()
+  Chest.drawAll()
   --EnemyGoblin.drawAll()
   --EnemySkeleton.drawAll()
 
@@ -114,8 +126,8 @@ end
 
 function beginContact(a, b, collision)
   if gameStarted then
-  --EnemyGoblin.beginContact(a, b, collision)
-  --EnemySkeleton.beginContact(a, b, collision)
+  Chest.beginContact(a, b, collision)
+  Spikes.beginContact(a, b, collision)
   if a == Player.physics.fixture or b == Player.physics.fixture then
     Player:beginContact(a, b, collision)  
   end
@@ -133,15 +145,17 @@ function endContact(a, b, collision)
   
 end
 
---function spawnEntities()
---  if gameStarted then
---  for i,v in ipairs(Map.layers.entity.objects) do
---    if v.type == "enemyGoblin" then
---      EnemyGoblin:new(v.x + v.width / 2, v.y + v.height / 2)
---    end
---    if v.type == "enemySkeleton" then
---      EnemySkeleton:new(v.x + v.width / 2, v.y + v.height / 2)
---    end
---  end
---end
---end
+function spawnEntities()
+  if gameStarted then
+  for i,v in ipairs(Map.layers.obstacles.objects) do
+    if haveSpikes then
+      if v.type == "spike" then
+        Spikes.new(v.x + v.width / 2, v.y + v.height / 2)
+      end
+    end
+    if v.type == "chest" then
+      Chest:new(v.x + v.width / 2, v.y + v.height / 2)
+    end
+  end
+  end
+end

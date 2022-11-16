@@ -9,7 +9,7 @@ function PlayerMirror:new()
    --Player.super.new(self,"src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png",400,500,20,1,0)
    self.image = "src/textures/PackNinja/IndividualSprites/adventurer-idle-00.png"
    self.x = love.graphics.getWidth()/2 -270
-   self.y = 50
+   self.y = 5000
    self.startX = self.x
    self.startY = self.y
    self.width = 32
@@ -137,12 +137,12 @@ function PlayerMirror:loadAssets()
 end
 
 
-function Player:die()
+function PlayerMirror:die()
    self.alive = false
    print("u died")
 end
 
-function Player:tintRed()
+function PlayerMirror:tintRed()
    self.color.green = 0
    self.color.blue = 0
 end

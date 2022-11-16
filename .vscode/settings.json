@@ -14,7 +14,11 @@
         "spawnEntities",
         "v",
         "terrain",
-        "self"
+        "self",
+        "background4",
+        "haveSpikes",
+        "gameStarted",
+        "gameWon"
     ],
     "Lua.diagnostics.disable": [
         "param-type-mismatch",
