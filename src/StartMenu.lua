@@ -58,6 +58,8 @@ function StartMenu:update(dt)
 end
 
 function StartMenu:draw()
+    self.mousePositionX, self.mousePositionY = love.mouse.getPosition()
+
     love.graphics.draw(self.background, 0, 0, 0, 2.7, 2.7) -- this is for our future background, it should be always before the map
     love.graphics.draw(self.background2, 0, 0, 0, 2.7, 2.7)
     love.graphics.draw(self.background3, 0, 0, 0, 2.7, 2.7)
@@ -71,10 +73,22 @@ function StartMenu:draw()
 
     love.graphics.print(self.title, self.titleX, self.titleY, 0, self.fontSize * 3, self.fontSize * 3) 
 
+    if ((self.mousePositionX > self.startButtonPosX and self.mousePositionX < self.rectangleWidth + self.startButtonPosX) and (self.mousePositionY > self.startButtonPosY and self.mousePositionY < self.rectangleHeight + self.startButtonPosY)) then
+        love.graphics.setColor(0, 1, 0, 1)
+        love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 40, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+        love.graphics.setColor(1, 1, 1, 1)
+    else
+        love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 40, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+    end
 
-    love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 40, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
-    love.graphics.print("quit",self.quitButtonPosX + 68, self.quitButtonPosY + 23, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
-
+    if ((self.mousePositionX > self.quitButtonPosX and self.mousePositionX < self.rectangleWidth + self.quitButtonPosX) and (self.mousePositionY > self.quitButtonPosY and self.mousePositionY < self.rectangleHeight + self.quitButtonPosY)) then
+        love.graphics.setColor(1, 0, 0, 1)
+        love.graphics.print("quit",self.quitButtonPosX + 68, self.quitButtonPosY + 23, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+        love.graphics.setColor(1, 1, 1, 1)
+    else
+        love.graphics.print("quit",self.quitButtonPosX + 68, self.quitButtonPosY + 23, 0, self.fontSize * 1.4 , self.fontSize * 1.4)
+    end
+    
     if gameWon then
         love.graphics.print("Congrats!!", 30 , h-150, 0, self.fontSize *1.8, self.fontSize *1.8)
     end
