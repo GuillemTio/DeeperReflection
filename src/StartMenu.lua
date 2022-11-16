@@ -9,9 +9,15 @@ function StartMenu:new()
     --self.backgroundMusic:setLooping(true)
     --self.backgroundMusic:play()
 
-    --self.background = love.graphics.newImage("src/textures/background/background_layer_1.png")
-    --self.background2 = love.graphics.newImage("src/textures/background/background_layer_2.png")
-    --self.background3 = love.graphics.newImage("src/textures/background/background_layer_3.png")
+    self.background = love.graphics.newImage("src/textures/background/background1.png")
+    self.background2 = love.graphics.newImage("src/textures/background/background2.png")
+    self.background3 = love.graphics.newImage("src/textures/background/background3.png")
+    self.background4 = love.graphics.newImage("src/textures/background/background4a.png")
+
+    self.player1 = love.graphics.newImage("src/textures/player/Player1/idle1.png")
+    self.playerMirror = love.graphics.newImage("src/textures/player/MirroredPlayer/idle1.png")
+
+    self.stick = love.graphics.newImage("src/textures/PixelFantasy_Caves_1.0/Palitroque.png")
 
     self.font = love.graphics.newFont("src/font/old.otf", 40)
     love.graphics.setFont(self.font)
@@ -52,24 +58,29 @@ function StartMenu:update(dt)
 end
 
 function StartMenu:draw()
-    --love.graphics.draw(self.background, 0, 0, 0, 5, 5) -- this is for our future background, it should be always before the map
-    --love.graphics.draw(self.background2, 0, 0, 0, 5, 5)
-    --love.graphics.draw(self.background3, 0, 0, 0, 5, 5)
+    love.graphics.draw(self.background, 0, 0, 0, 2.7, 2.7) -- this is for our future background, it should be always before the map
+    love.graphics.draw(self.background2, 0, 0, 0, 2.7, 2.7)
+    love.graphics.draw(self.background3, 0, 0, 0, 2.7, 2.7)
+    love.graphics.draw(self.background4, 0, 0, 0, 2.7, 2.7)
 
-    
+    love.graphics.draw(self.player1, 400, 250, 0, -10, 10 )
+    love.graphics.draw(self.playerMirror, 870, 250, 0, 10, 10 )
+
+    love.graphics.draw(self.stick, 540, 480, 0, 1.2, 1.2 )
+    love.graphics.draw(self.stick, 540, 650, 0, 1.2, 1.2 )
 
     love.graphics.print(self.title, self.titleX, self.titleY, 0, self.fontSize * 3, self.fontSize * 3) 
 
 
     love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 40, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
-    love.graphics.print("quit",self.quitButtonPosX + 65, self.quitButtonPosY + 20, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+    love.graphics.print("quit",self.quitButtonPosX + 68, self.quitButtonPosY + 23, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
 
     if gameWon then
         love.graphics.print("Congrats!!", 30 , h-150, 0, self.fontSize *1.8, self.fontSize *1.8)
     end
 
-    love.graphics.rectangle("line", self.startButtonPosX, self.startButtonPosY, self.rectangleWidth, self.rectangleHeight)
-    love.graphics.rectangle("line", self.quitButtonPosX, self.quitButtonPosY, self.rectangleWidth, self.rectangleHeight)
+    --love.graphics.rectangle("line", self.startButtonPosX, self.startButtonPosY, self.rectangleWidth, self.rectangleHeight)
+    --love.graphics.rectangle("line", self.quitButtonPosX, self.quitButtonPosY, self.rectangleWidth, self.rectangleHeight)
 
 end
 

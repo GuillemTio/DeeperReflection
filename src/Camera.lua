@@ -15,7 +15,7 @@ local Camera = {
  end
  
  function Camera:setPosition(x, y)
-	self.x = x - love.graphics.getWidth() / 2 / self.scale
+	self.x = x 
 	self.y = y
 	local RS = self.y + love.graphics.getHeight() / 2
  

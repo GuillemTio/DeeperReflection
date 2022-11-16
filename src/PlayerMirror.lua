@@ -12,8 +12,8 @@ function PlayerMirror:new()
    self.y = 50
    self.startX = self.x
    self.startY = self.y
-   self.width = 50
-   self.height = 37
+   self.width = 32
+   self.height = 32
    self.xVel = 0
    self.yVel = 100
    self.maxSpeed = 200
@@ -21,7 +21,6 @@ function PlayerMirror:new()
    self.friction = 3000
    self.gravity = 1500
    self.jumpAmount = -500
-   self.health = {current = 5, max = 5}
    
 
    self.color = {
@@ -48,7 +47,7 @@ function PlayerMirror:new()
    self.physics = {}
    self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
    self.physics.body:setFixedRotation(true)
-   self.physics.shape = love.physics.newRectangleShape(self.width / 2.3, self.height)
+   self.physics.shape = love.physics.newRectangleShape(self.width / 2.3, self.height/1.5)
    self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 
@@ -61,7 +60,7 @@ function PlayerMirror:update(dt)
    self:decreaseGraceTime(dt)
    self:animate(dt)
    self:syncPhysics()
-    self:move(dt) 
+   self:move(dt) 
    self:applyGravity(dt)
 
 end
@@ -137,26 +136,6 @@ function PlayerMirror:loadAssets()
 
 end
 
-function PlayerMirror:takeDamage(amount)
-   self:tintRed()
-   if not self.godModeActive then
-   if self.health.current - amount > 0 then
-      self.health.current = self.health.current - amount
-      if self.direction == "right" then
-         self.xVel = self.xVel - 700
-         self.yVel = self.yVel - 200
-      else
-         self.xVel = self.xVel + 700
-         self.yVel = self.yVel - 300
-      end
-   else
-      self.health.current = 0
-      self:die()
-   end
-end
-
-   print(self.health.current)
-end
 
 function Player:die()
    self.alive = false
@@ -169,10 +148,8 @@ function Player:tintRed()
 end
 
 function PlayerMirror:respawn()
-   if not self.alive or self.y > 730 then
+   if not self.alive or self.y < Camera.y or self.y > Camera.y + love.graphics.getHeight() / 2 then
       love.load()
-     
-
    end
 end
 
@@ -248,11 +225,6 @@ function PlayerMirror:jump(key)
 end
 
 
-
-
-
-
-
 function PlayerMirror:endContact(a, b, collision)
    if a == self.physics.fixture or b == self.physics.fixture then
       if self.currentGroundCollision == collision then
@@ -270,7 +242,7 @@ function PlayerMirror:draw()
    end
 
    love.graphics.setColor(self.color.red, self.color.green, self.color.blue)
-   love.graphics.draw(self.animation.draw, self.x, self.y, 0, scaleX, 1, self.animation.width / 2, self.animation.height / 2)
+   love.graphics.draw(self.animation.draw, self.x, self.y, 0, scaleX, 1, self.animation.width / 2, self.animation.height / 1.5)
    love.graphics.setColor(1,1,1,1)
 
 end

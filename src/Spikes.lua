@@ -46,7 +46,11 @@ function Spike.beginContact(a, b, collision)
    for i,instance in ipairs(ActiveSpikes) do
       if a == instance.physics.fixture or b == instance.physics.fixture then
          if a == Player.physics.fixture or b == Player.physics.fixture then
-            Player:takeDamage(instance.damage)
+            Player:die()
+            return true
+         end
+         if a == PlayerMirror.physics.fixture or b == PlayerMirror.physics.fixture then
+            PlayerMirror:die()
             return true
          end
       end

@@ -29,10 +29,10 @@ function love.load()
   World = love.physics.newWorld(0, 0) -- takes x and y velocity for the World, for example to create gravity
   World:setCallbacks(beginContact, endContact)
   Map:box2d_init(World)
-  --Map.layers.solid.visible = false -- colliders non visible
+  Map.layers.solid.visible = false -- colliders non visible
  -- Map.layers.entity.visible = false
   
-  MapHeight = 230*16 --Map.layers.grounded.height * 16
+  MapHeight = Map.layers.grounded.height * 16
   --background = love.graphics.newImage("src/textures/background/background_layer_1.png") -- this is for our future background
   --background2 = love.graphics.newImage("src/textures/background/background_layer_2.png")
   --background3 = love.graphics.newImage("src/textures/background/background_layer_3.png")
@@ -42,6 +42,8 @@ function love.load()
   PlayerMirror:new()  
   Player:new()
   --HUD:load()
+  local font = love.graphics.newFont("src/font/old.otf", 40)
+  love.graphics.setFont(font)
 
   --spawnEntities()
   --local p = Player()
@@ -81,9 +83,13 @@ function love.draw()
   --love.graphics.draw(background3, 0, 0, 0, 5, 5)
 
   Map:draw(-Camera.x, -Camera.y, Camera.scale, Camera.scale)
+  
 
 
   Camera:apply()
+
+  love.graphics.print("you're lost!",230, 70, 0, 0.27 , 0.27)
+  love.graphics.print("don't lose your partner!",420, 250, 0, 0.27 , 0.27)
 
   Player:draw()
   PlayerMirror:draw()  
