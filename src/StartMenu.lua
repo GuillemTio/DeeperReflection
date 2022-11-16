@@ -25,19 +25,20 @@ function StartMenu:new()
 
     self.title = "Deeper Reflection"
     self.titleX = w/7
-    self.titleY = h/7.5
+    self.titleY = h/10
 
-    self.imageStartPosX = w/2.75
-    self.imageStartPosY = h/4
+
     self.startButtonPosX = w/2.45
-    self.startButtonPosY = h/2
+    self.startButtonPosY = h/2.9
 
-    self.imageQuitPosX = w/2.75
-    self.imageQuitPosY = h/2
+    self.spikesButtonPosX = w/2.45
+    self.spikesButtonPosY = h/1.8
+
     self.quitButtonPosX = w/2.45
     self.quitButtonPosY = h - 175
 
-    self.rectangleWidth, self.rectangleHeight = 250, 150
+
+    self.rectangleWidth, self.rectangleHeight = 250, 120
 end
 
 function StartMenu:update(dt)
@@ -68,21 +69,30 @@ function StartMenu:draw()
     love.graphics.draw(self.player1, 400, 250, 0, -10, 10 )
     love.graphics.draw(self.playerMirror, 870, 250, 0, 10, 10 )
 
-    love.graphics.draw(self.stick, 540, 480, 0, 1.2, 1.2 )
+    love.graphics.draw(self.stick, 540, 350, 0, 1.2, 1.2 )
+    love.graphics.draw(self.stick, 540, 500, 0, 1.2, 1.2 )
     love.graphics.draw(self.stick, 540, 650, 0, 1.2, 1.2 )
 
     love.graphics.print(self.title, self.titleX, self.titleY, 0, self.fontSize * 3, self.fontSize * 3) 
 
     if ((self.mousePositionX > self.startButtonPosX and self.mousePositionX < self.rectangleWidth + self.startButtonPosX) and (self.mousePositionY > self.startButtonPosY and self.mousePositionY < self.rectangleHeight + self.startButtonPosY)) then
-        love.graphics.setColor(0, 1, 0, 1)
-        love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 40, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+        love.graphics.setColor(0, 0.6, 0, 1)
+        love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 20, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
         love.graphics.setColor(1, 1, 1, 1)
     else
-        love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 40, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+        love.graphics.print("start",self.startButtonPosX + 60, self.startButtonPosY + 20, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+    end
+
+    if ((self.mousePositionX > self.spikesButtonPosX and self.mousePositionX < self.rectangleWidth + self.spikesButtonPosX) and (self.mousePositionY > self.spikesButtonPosY and self.mousePositionY < self.rectangleHeight + self.spikesButtonPosY)) then
+        love.graphics.setColor(0, 0, 0.6, 1)
+        love.graphics.print("spikes?",self.spikesButtonPosX + 40, self.spikesButtonPosY + 20, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
+        love.graphics.setColor(1, 1, 1, 1)
+    else
+        love.graphics.print("spikes?",self.spikesButtonPosX + 40, self.spikesButtonPosY + 20, 0, self.fontSize * 1.4 , self.fontSize * 1.4)
     end
 
     if ((self.mousePositionX > self.quitButtonPosX and self.mousePositionX < self.rectangleWidth + self.quitButtonPosX) and (self.mousePositionY > self.quitButtonPosY and self.mousePositionY < self.rectangleHeight + self.quitButtonPosY)) then
-        love.graphics.setColor(1, 0, 0, 1)
+        love.graphics.setColor(0.6, 0, 0, 1)
         love.graphics.print("quit",self.quitButtonPosX + 68, self.quitButtonPosY + 23, 0, self.fontSize * 1.4 , self.fontSize * 1.4) 
         love.graphics.setColor(1, 1, 1, 1)
     else
@@ -93,8 +103,9 @@ function StartMenu:draw()
         love.graphics.print("Congrats!!", 30 , h-150, 0, self.fontSize *1.8, self.fontSize *1.8)
     end
 
-    --love.graphics.rectangle("line", self.startButtonPosX, self.startButtonPosY, self.rectangleWidth, self.rectangleHeight)
-    --love.graphics.rectangle("line", self.quitButtonPosX, self.quitButtonPosY, self.rectangleWidth, self.rectangleHeight)
+    love.graphics.rectangle("line", self.startButtonPosX, self.startButtonPosY, self.rectangleWidth, self.rectangleHeight)
+    love.graphics.rectangle("line", self.quitButtonPosX, self.quitButtonPosY, self.rectangleWidth, self.rectangleHeight)
+    love.graphics.rectangle("line", self.spikesButtonPosX, self.spikesButtonPosY, self.rectangleWidth, self.rectangleHeight)
 
 end
 
