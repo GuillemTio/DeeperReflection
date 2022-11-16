@@ -1,9 +1,6 @@
 Player = Player or require "src/Player"
 Camera = Camera or require"src/Camera"
 FinMenu = FinMenu or require"src/FinMenu"
---EnemyGoblin = EnemyGoblin or require"src/EnemyGoblin"
---EnemySkeleton = EnemySkeleton or require"src/EnemySkeleton"
---HUD = HUD or require"src/HUD"
 Spikes = Spikes or require"src/Spikes"
 Chest = Chest or require"src/Chest"
 StartMenu = StartMenu or require"src/StartMenu"
@@ -44,11 +41,8 @@ function love.load()
   background3 = love.graphics.newImage("src/textures/background/background3.png")
   background4 = love.graphics.newImage("src/textures/background/background4a.png")
   
-  --EnemyGoblin.loadAssets()
-  --EnemySkeleton.loadAssets()
   PlayerMirror:new()  
   Player:new()
-  --HUD:load()
   
   spawnEntities()
   
@@ -77,10 +71,7 @@ function love.update(dt)
   PlayerMirror:update(dt)  
   Spikes.updateAll(dt)
   Chest.updateAll(dt)
-  --EnemyGoblin.updateAll(dt)
-  --EnemySkeleton.updateAll(dt)
   Camera:setPosition(0, Player.y-100)
-  --HUD:update(dt)
   end
   
 end
@@ -115,11 +106,8 @@ function love.draw()
   PlayerMirror:draw()  
   Spikes.drawAll()
   Chest.drawAll()
-  --EnemyGoblin.drawAll()
-  --EnemySkeleton.drawAll()
 
   Camera:clear()
-  --HUD:draw()
   end
 end
 
@@ -131,6 +119,11 @@ function love.keypressed(key)
     Player:jump(key)
     PlayerMirror:jump(key)
    
+    if key == "escape" then
+      gameStarted = false
+      love.load()
+      Spikes:removeAll()
+    end
   end
 end
 

@@ -7,6 +7,15 @@ Spike.height = Spike.img:getHeight()
 local ActiveSpikes = {}
 local Player = require("src/Player")
 
+function Spike.removeAll()
+   for i,v in ipairs(ActiveSpikes) do
+      v.physics.body:destroy()
+      table.remove(ActiveSpikes,i)
+   end
+
+   ActiveSpikes = {}
+end
+
 function Spike.new(x,y)
    local instance = setmetatable({}, Spike)
    instance.x = x

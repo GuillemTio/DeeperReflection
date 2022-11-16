@@ -48,7 +48,8 @@ function Chest.beginContact(a, b, collision)
          if a == Player.physics.fixture or b == Player.physics.fixture then
             
                 gameWon = true
-                love.load()                
+                love.load()   
+                Spikes:removeAll()             
                 return true
              
          end
